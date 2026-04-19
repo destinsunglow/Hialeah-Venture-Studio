@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Hialeah Venture Studio — YC for Atoms</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<style>
+/* ============================================================
+   HIALEAH VENTURE STUDIO — one page website
+   ============================================================ */
+
+:root {
+  --ink: #0a0908;
+  --ink-2: #14100e;
+  --ink-3: #1c1814;
+  --bone: #f5f1e8;
+  --bone-2: #e8e0d0;
+  --steel: #6b6256;
+  --steel-2: #3a342d;
+  --heat: #ff4a1c;       /* Miami hot — industrial caution */
+  --heat-2: #ffb341;     /* sunset gold */
+  --ember: #c7341a;
+  --line: rgba(245, 241, 232, 0.12);
+  --line-2: rgba(245, 241, 232, 0.25);
+
+  --f-display: "Instrument Serif", "Times New Roman", serif;
+  --f-sans: "Space Grotesk", "Helvetica Neue", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--f-sans);
+  font-size: 16px;
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255, 74, 28, 0.08), transparent 50%),
+    var(--ink);
+}
+
+/* Grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+::selection { background: var(--heat); color: var(--ink); }
+
+/* -------- type -------- */
+.mono { font-family: var(--f-mono); letter-spacing: 0.04em; font-size: 11px; text-transform: uppercase; }
+.serif { font-family: var(--f-display); font-weight: 400; font-style: italic; }
+
+h1, h2, h3 { font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--heat);
+}
+.eyebrow::before {
+  content: ""; width: 28px; height: 1px; background: var(--heat);
+}
+
+/* -------- shared layout -------- */
+.section {
+  position: relative;
+  padding: 140px 48px;
+  max-width: 1440px;
+  margin: 0 auto;
+}
+@media (max-width: 780px) {
+  .section { padding: 80px 24px; }
+}
+
+.rule { height: 1px; background: var(--line); width: 100%; }
+.rule-heat { height: 1px; background: var(--heat); width: 100%; }
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 36px;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(12px);
+  background: rgba(10, 9, 8, 0.6);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.nav-brand { display: flex; align-items: center; gap: 10px; }
+.nav-brand-mark {
+  width: 22px; height: 22px;
+  background: var(--heat);
+  position: relative;
+}
+.nav-brand-mark::before {
+  content: ""; position: absolute; inset: 4px;
+  background: var(--ink);
+}
+.nav-brand-mark::after {
+  content: ""; position: absolute; inset: 8px;
+  background: var(--heat);
+}
+.nav-links { display: flex; gap: 32px; color: var(--bone-2); }
+.nav-links span:hover { color: var(--heat); cursor: pointer; }
+.nav-right { display: flex; align-items: center; gap: 16px; color: var(--steel); }
+.nav-pulse {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--heat);
+  box-shadow: 0 0 12px var(--heat);
+  animation: pulse 2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.3); }
+}
+@media (max-width: 780px) {
+  .nav-links { display: none; }
+  .nav { padding: 16px 20px; }
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 120px 48px 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+}
+@media (max-width: 780px) { .hero { padding: 100px 20px 40px; } }
+
+.hero-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-top {
+  position: relative; z-index: 2;
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.hero-top-meta {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--steel);
+  line-height: 1.8;
+}
+.hero-top-meta strong { color: var(--bone); font-weight: 400; }
+
+.hero-title {
+  position: relative; z-index: 2;
+  margin: 40px 0;
+  font-family: var(--f-sans);
+  font-weight: 500;
+  font-size: clamp(72px, 16vw, 260px);
+  line-height: 0.88;
+  letter-spacing: -0.04em;
+}
+.hero-title .line { display: block; overflow: hidden; }
+.hero-title .word { display: inline-block; }
+.hero-title .serif {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--heat);
+  letter-spacing: -0.02em;
+}
+
+.hero-bottom {
+  position: relative; z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 32px;
+  align-items: end;
+  border-top: 1px solid var(--line);
+  padding-top: 32px;
+}
+@media (max-width: 900px) {
+  .hero-bottom { grid-template-columns: 1fr 1fr; }
+}
+.hero-stat-label {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel); margin-bottom: 12px;
+}
+.hero-stat-val {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(36px, 4vw, 56px); line-height: 1;
+}
+.hero-stat-val .num { font-style: normal; font-family: var(--f-sans); font-weight: 400; }
+.hero-stat-sub {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--steel-2); margin-top: 10px;
+}
+.hero-pitch {
+  max-width: 460px;
+  font-size: 15px;
+  color: var(--bone-2);
+  line-height: 1.55;
+}
+
+/* Ticker */
+.ticker {
+  position: relative;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow: hidden;
+  white-space: nowrap;
+  background: var(--ink);
+  padding: 18px 0;
+}
+.ticker-track {
+  display: inline-block;
+  animation: tickerSlide 50s linear infinite;
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: clamp(36px, 5vw, 72px);
+  letter-spacing: -0.02em;
+}
+.ticker-track span { margin: 0 40px; color: var(--bone); }
+.ticker-track .heat { color: var(--heat); }
+.ticker-track .dot {
+  display: inline-block;
+  width: 10px; height: 10px; background: var(--heat);
+  border-radius: 50%;
+  margin: 0 30px;
+  transform: translateY(-8px);
+}
+@keyframes tickerSlide {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ============================================================
+   PROBLEM
+   ============================================================ */
+.problem {
+  position: relative;
+  padding: 180px 48px 140px;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 780px) { .problem { padding: 100px 24px; } }
+
+.problem-header {
+  max-width: 1440px; margin: 0 auto 80px;
+  display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px;
+}
+@media (max-width: 900px) {
+  .problem-header { grid-template-columns: 1fr; gap: 40px; }
+}
+.problem-hed {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(44px, 7vw, 120px); line-height: 0.9;
+  letter-spacing: -0.03em;
+}
+.problem-hed .serif { color: var(--heat); }
+.problem-copy {
+  font-size: 18px; line-height: 1.5; color: var(--bone-2);
+  max-width: 460px;
+  align-self: end;
+}
+
+.problem-70 {
+  max-width: 1440px; margin: 0 auto 80px;
+  padding: 60px 0;
+  border-top: 1px solid var(--heat);
+  border-bottom: 1px solid var(--heat);
+  display: grid; grid-template-columns: 2fr 1fr; gap: 40px; align-items: center;
+}
+@media (max-width: 780px) { .problem-70 { grid-template-columns: 1fr; } }
+.problem-70-num {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(120px, 28vw, 480px);
+  line-height: 0.85;
+  color: var(--heat);
+  letter-spacing: -0.06em;
+}
+.problem-70-copy {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(24px, 2.4vw, 36px);
+  line-height: 1.2;
+  color: var(--bone);
+}
+
+.gap-grid {
+  max-width: 1440px; margin: 0 auto;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 900px) { .gap-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .gap-grid { grid-template-columns: 1fr; } }
+.gap-cell {
+  padding: 40px 28px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  min-height: 240px;
+  position: relative;
+  transition: background 0.4s;
+}
+.gap-cell:last-child { border-right: none; }
+@media (max-width: 900px) {
+  .gap-cell:nth-child(2) { border-right: none; }
+}
+.gap-cell:hover { background: var(--ink-3); }
+.gap-cell-num {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  color: var(--heat); margin-bottom: 20px;
+}
+.gap-cell-h {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 32px; margin-bottom: 14px;
+}
+.gap-cell-p {
+  font-size: 14px; color: var(--bone-2); line-height: 1.5;
+}
+
+/* ============================================================
+   OPPORTUNITY — big numbers
+   ============================================================ */
+.opportunity {
+  position: relative;
+  padding: 180px 48px;
+  border-top: 1px solid var(--line);
+  background: var(--ink-2);
+}
+@media (max-width: 780px) { .opportunity { padding: 100px 24px; } }
+
+.opp-hed {
+  max-width: 1440px; margin: 0 auto 120px;
+}
+.opp-hed-big {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(48px, 9vw, 160px); line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin-top: 24px;
+}
+.opp-hed-big .serif { color: var(--heat); }
+
+.markets {
+  max-width: 1440px; margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 1100px) { .markets { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .markets { grid-template-columns: 1fr; } }
+
+.market {
+  padding: 40px 24px;
+  border-right: 1px solid var(--line);
+  position: relative;
+  min-height: 260px;
+  display: flex; flex-direction: column; justify-content: space-between;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+.market:last-child { border-right: none; }
+@media (max-width: 1100px) {
+  .market { border-bottom: 1px solid var(--line); }
+  .market:nth-child(2n) { border-right: none; }
+}
+.market:hover { background: var(--ink-3); }
+.market:hover .market-num { color: var(--heat); }
+
+.market-sector {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel);
+}
+.market-num {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(48px, 6vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  transition: color 0.3s;
+  margin: 32px 0 12px;
+}
+.market-cagr {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 16px; color: var(--bone-2);
+}
+
+.tailwinds {
+  max-width: 1440px; margin: 60px auto 0;
+  padding-top: 40px;
+  border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; gap: 12px 32px;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--steel);
+}
+.tailwinds span { color: var(--bone); }
+
+/* ============================================================
+   SPRINT horizontal scroll
+   ============================================================ */
+.sprint {
+  position: relative;
+  border-top: 1px solid var(--line);
+  background: var(--ink);
+}
+.sprint-intro {
+  max-width: 1440px; margin: 0 auto;
+  padding: 140px 48px 40px;
+}
+@media (max-width: 780px) { .sprint-intro { padding: 80px 24px 30px; } }
+
+.sprint-hed {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(48px, 9vw, 160px); line-height: 0.88;
+  letter-spacing: -0.04em;
+  margin-top: 24px;
+  max-width: 14ch;
+}
+.sprint-hed .heat { color: var(--heat); }
+.sprint-hed .serif { font-family: var(--f-display); font-style: italic; }
+
+.sprint-sub {
+  margin-top: 40px;
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px;
+  border-top: 1px solid var(--line);
+  padding-top: 30px;
+}
+@media (max-width: 780px) { .sprint-sub { grid-template-columns: 1fr; } }
+
+.sprint-sub-item strong {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 40px;
+  color: var(--heat);
+  font-weight: 400;
+  display: block;
+  margin-bottom: 6px;
+}
+.sprint-sub-item span {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--bone-2);
+}
+
+/* horizontal sticky */
+.sprint-track-wrap {
+  height: 500vh; /* pinning distance */
+  position: relative;
+}
+.sprint-track-pin {
+  position: sticky; top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  justify-content: center;
+}
+.sprint-track-head {
+  padding: 0 48px 30px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel);
+}
+.sprint-track-head .heat { color: var(--heat); }
+
+.sprint-track {
+  display: flex;
+  height: 60vh;
+  will-change: transform;
+  padding: 0 48px;
+}
+
+.sprint-step {
+  flex: 0 0 58vw;
+  padding: 0 40px;
+  border-left: 1px solid var(--line);
+  display: flex; flex-direction: column; justify-content: space-between;
+  position: relative;
+}
+.sprint-step:first-child { border-left: 1px solid var(--heat); }
+.sprint-step-n {
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em;
+  color: var(--heat);
+}
+.sprint-step-days {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(60px, 10vw, 180px); line-height: 0.9;
+  letter-spacing: -0.04em;
+  margin: 20px 0;
+}
+.sprint-step-title {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(28px, 3vw, 44px);
+  margin-bottom: 16px;
+}
+.sprint-step-desc {
+  font-size: 15px; color: var(--bone-2); max-width: 42ch;
+  line-height: 1.5;
+}
+.sprint-step-tag {
+  position: absolute; top: 0; right: 40px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  color: var(--steel); text-transform: uppercase;
+}
+
+.sprint-progress {
+  margin-top: 40px;
+  padding: 0 48px;
+  display: flex; align-items: center; gap: 20px;
+}
+.sprint-progress-bar {
+  flex: 1; height: 1px; background: var(--line); position: relative;
+}
+.sprint-progress-bar::before {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0;
+  background: var(--heat);
+  width: var(--sp, 0%);
+  transition: width 0.15s linear;
+}
+.sprint-progress-num {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  color: var(--heat);
+  min-width: 60px; text-align: right;
+}
+
+/* ============================================================
+   FACILITY — 3D vertical factory
+   ============================================================ */
+.facility {
+  position: relative;
+  border-top: 1px solid var(--line);
+}
+
+.facility-intro {
+  max-width: 1440px; margin: 0 auto;
+  padding: 140px 48px 60px;
+}
+@media (max-width: 780px) { .facility-intro { padding: 80px 24px 40px; } }
+.facility-hed {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(48px, 9vw, 160px); line-height: 0.88;
+  letter-spacing: -0.04em;
+  margin-top: 24px;
+}
+.facility-hed .serif { color: var(--heat); }
+.facility-stats {
+  max-width: 1440px; margin: 0 auto;
+  padding: 40px 48px 0;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--line);
+  padding-top: 30px;
+}
+@media (max-width: 900px) { .facility-stats { grid-template-columns: 1fr 1fr; } }
+.fstat-n {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px); line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--heat);
+}
+.fstat-l {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--bone-2); margin-top: 10px;
+}
+.fstat-sub { font-size: 13px; color: var(--steel); margin-top: 6px; }
+
+/* 3D tower */
+.tower-scene {
+  height: 550vh;
+  position: relative;
+  margin-top: 60px;
+}
+.tower-pin {
+  position: sticky; top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 0;
+}
+@media (max-width: 900px) {
+  .tower-pin { grid-template-columns: 1fr; }
+}
+
+.tower-stage {
+  position: relative;
+  border-right: 1px solid var(--line);
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--ink) 0%, var(--ink-2) 100%);
+  display: flex; align-items: center; justify-content: center;
+  perspective: 1400px;
+}
+@media (max-width: 900px) { .tower-stage { display: none; } }
+
+.tower-3d {
+  position: relative;
+  width: 260px;
+  height: 520px;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+}
+
+.floor-box {
+  position: absolute;
+  left: 0; right: 0;
+  height: 100px;
+  border: 1px solid var(--line-2);
+  background: rgba(20, 16, 14, 0.85);
+  transform-style: preserve-3d;
+  transition: all 0.5s cubic-bezier(0.2, 0.9, 0.2, 1);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  color: var(--steel);
+  text-transform: uppercase;
+}
+.floor-box::before {
+  content: ""; position: absolute; inset: 0;
+  border: 1px solid transparent;
+  transition: all 0.4s;
+}
+.floor-box.active {
+  background: var(--ink-3);
+  border-color: var(--heat);
+  box-shadow: 0 0 40px rgba(255, 74, 28, 0.25), inset 0 0 0 1px rgba(255, 74, 28, 0.3);
+  color: var(--heat);
+}
+
+/* the face & sides */
+.floor-face {
+  position: absolute; inset: 0;
+  border: 1px solid var(--line-2);
+  background: rgba(20, 16, 14, 0.9);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 18px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  color: var(--steel); text-transform: uppercase;
+}
+.floor-face.active {
+  background: var(--ink-3);
+  border-color: var(--heat);
+  color: var(--heat);
+  box-shadow: 0 0 30px rgba(255, 74, 28, 0.2);
+}
+.floor-face .n {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 28px; color: inherit;
+}
+.floor-side {
+  position: absolute;
+  height: 100%; width: 80px;
+  background: rgba(10, 9, 8, 0.95);
+  border: 1px solid var(--line);
+  left: 100%;
+  transform-origin: left;
+  transform: rotateY(90deg);
+  top: 0;
+}
+.floor-side.left {
+  left: auto; right: 100%;
+  transform-origin: right;
+  transform: rotateY(-90deg);
+}
+.floor-top {
+  position: absolute;
+  width: 100%; height: 80px;
+  background: rgba(10, 9, 8, 0.9);
+  border: 1px solid var(--line);
+  top: 0;
+  transform-origin: top;
+  transform: rotateX(-90deg) translateY(-100%);
+}
+
+.tower-axis {
+  position: absolute;
+  left: -70px; top: 0; bottom: 0; width: 50px;
+  display: flex; flex-direction: column-reverse;
+  justify-content: space-between;
+  padding: 0;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  color: var(--steel);
+}
+
+.tower-ground {
+  position: absolute; left: -80px; right: -400px; bottom: -30px;
+  height: 1px; background: var(--heat);
+}
+
+.tower-info {
+  position: relative;
+  padding: 48px;
+  overflow: hidden;
+  background: var(--ink);
+}
+@media (max-width: 780px) { .tower-info { padding: 24px; } }
+
+.tower-info-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 16px;
+  margin-bottom: 30px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel);
+}
+
+.floor-card {
+  position: absolute;
+  top: 140px; left: 48px; right: 48px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s, transform 0.4s;
+  pointer-events: none;
+}
+.floor-card.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.floor-card-n {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(80px, 12vw, 200px);
+  line-height: 0.85;
+  color: var(--heat);
+  letter-spacing: -0.04em;
+}
+.floor-card-name {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(28px, 3.5vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 16px 0 28px;
+}
+.floor-card-desc {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 20px; color: var(--bone-2);
+  max-width: 40ch;
+  margin-bottom: 28px;
+  line-height: 1.35;
+}
+.floor-card-list {
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.floor-card-list li {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex; justify-content: space-between;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.floor-card-list li .t { color: var(--bone); }
+.floor-card-list li .v { color: var(--steel); }
+
+.tower-hint {
+  position: absolute;
+  bottom: 32px; left: 48px; right: 48px;
+  display: flex; justify-content: space-between;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel);
+  pointer-events: none;
+}
+
+/* ============================================================
+   SECTORS TABLE
+   ============================================================ */
+.sectors {
+  border-top: 1px solid var(--line);
+  padding: 140px 48px;
+  background: var(--ink);
+}
+@media (max-width: 780px) { .sectors { padding: 80px 24px; } }
+
+.sectors-inner { max-width: 1440px; margin: 0 auto; }
+.sectors-hed {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(44px, 7vw, 120px);
+  line-height: 0.9; letter-spacing: -0.03em;
+  margin: 24px 0 60px;
+}
+.sectors-hed .serif { color: var(--heat); }
+
+.sectors-table {
+  display: grid;
+  grid-template-columns: 1.2fr 2fr 2fr 1.5fr;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 900px) {
+  .sectors-table { grid-template-columns: 1fr; }
+}
+
+.sectors-th {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel);
+  background: var(--ink-2);
+}
+@media (max-width: 900px) { .sectors-th { display: none; } }
+
+.sectors-row {
+  display: contents;
+}
+.sectors-cell {
+  padding: 32px 20px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--bone-2);
+  transition: background 0.3s;
+}
+.sectors-row:hover .sectors-cell { background: var(--ink-2); }
+.sectors-cell.name {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 26px; color: var(--bone);
+}
+@media (max-width: 900px) {
+  .sectors-cell { border-bottom: none; padding: 8px 0; }
+  .sectors-cell.name { padding-top: 24px; }
+  .sectors-row:last-of-type .sectors-cell:last-child { border-bottom: 1px solid var(--line); padding-bottom: 24px; }
+}
+
+/* ============================================================
+   ECONOMICS
+   ============================================================ */
+.economics {
+  border-top: 1px solid var(--line);
+  padding: 140px 48px;
+  background: var(--ink-2);
+}
+@media (max-width: 780px) { .economics { padding: 80px 24px; } }
+
+.economics-inner { max-width: 1440px; margin: 0 auto; }
+.economics-hed {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(44px, 7vw, 120px);
+  line-height: 0.9; letter-spacing: -0.03em;
+  margin: 24px 0 60px;
+}
+.economics-hed .serif { color: var(--heat); }
+
+.equation {
+  display: grid;
+  grid-template-columns: repeat(9, auto);
+  gap: 0;
+  align-items: center;
+  padding: 60px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  overflow-x: auto;
+  justify-content: start;
+}
+.eq-item {
+  padding: 0 28px;
+  min-width: 120px;
+}
+.eq-op {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 48px; color: var(--heat);
+}
+.eq-n {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(44px, 5vw, 72px);
+  line-height: 1; letter-spacing: -0.03em;
+}
+.eq-l {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--steel); margin-top: 10px;
+}
+.eq-result .eq-n { color: var(--heat); }
+
+.financials {
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 900px) { .financials { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .financials { grid-template-columns: 1fr; } }
+
+.fin-year {
+  padding: 36px 22px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+}
+.fin-year:last-child { border-right: none; }
+.fin-year-label {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  color: var(--steel); text-transform: uppercase;
+}
+.fin-year-rev {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(36px, 5vw, 64px); line-height: 1;
+  letter-spacing: -0.03em;
+  margin: 20px 0 10px;
+}
+.fin-year-ebitda {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 18px;
+  color: var(--heat);
+}
+.fin-year-desc {
+  margin-top: 12px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--steel-2);
+  line-height: 1.6;
+}
+.fin-year-bar {
+  position: absolute; left: 0; bottom: -1px; height: 2px;
+  background: var(--heat);
+  width: var(--w, 0%);
+}
+
+/* ============================================================
+   MOAT + RETURNS
+   ============================================================ */
+.moat {
+  border-top: 1px solid var(--line);
+  padding: 140px 48px;
+}
+@media (max-width: 780px) { .moat { padding: 80px 24px; } }
+
+.moat-inner { max-width: 1440px; margin: 0 auto; }
+.moat-hed {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(48px, 9vw, 160px);
+  line-height: 0.88; letter-spacing: -0.04em;
+  margin: 24px 0;
+  max-width: 16ch;
+}
+.moat-hed .serif { color: var(--heat); }
+
+.moat-grid {
+  display: grid; grid-template-columns: 2fr 1fr;
+  gap: 60px;
+  align-items: end;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 60px;
+}
+@media (max-width: 900px) { .moat-grid { grid-template-columns: 1fr; gap: 24px; } }
+.moat-copy {
+  font-size: 17px; color: var(--bone-2); max-width: 54ch;
+  line-height: 1.55;
+}
+
+.moat-table {
+  margin-top: 80px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 0.8fr 2fr 0.8fr;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 780px) {
+  .moat-table { grid-template-columns: 1fr; }
+  .moat-th { display: none; }
+  .moat-row { display: block; padding: 24px 0; border-bottom: 1px solid var(--line); }
+  .moat-cell { padding: 4px 0 !important; border-bottom: none !important; }
+}
+.moat-th {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--line);
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel);
+}
+.moat-row { display: contents; }
+.moat-cell {
+  padding: 24px 20px;
+  border-bottom: 1px solid var(--line);
+  font-size: 14px; color: var(--bone-2);
+  transition: background 0.3s;
+}
+.moat-row:hover .moat-cell { background: var(--ink-2); }
+.moat-cell.op {
+  font-family: var(--f-display); font-style: italic;
+  font-size: 22px; color: var(--bone);
+}
+.moat-row.us .moat-cell {
+  background: rgba(255, 74, 28, 0.05);
+  border-color: var(--heat);
+}
+.moat-row.us .moat-cell.op { color: var(--heat); }
+
+/* Returns */
+.returns {
+  border-top: 1px solid var(--line);
+  padding: 140px 48px;
+  background: var(--ink-2);
+}
+@media (max-width: 780px) { .returns { padding: 80px 24px; } }
+.returns-inner { max-width: 1440px; margin: 0 auto; }
+.returns-hed {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(48px, 9vw, 160px);
+  line-height: 0.88; letter-spacing: -0.04em;
+  margin: 24px 0 60px;
+  max-width: 16ch;
+}
+.returns-hed .serif { color: var(--heat); }
+.returns-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--line);
+}
+@media (max-width: 900px) { .returns-grid { grid-template-columns: 1fr; } }
+.return-case {
+  padding: 48px 36px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  position: relative;
+  overflow: hidden;
+}
+.return-case:last-child { border-right: none; }
+@media (max-width: 900px) { .return-case { border-right: none; } }
+
+.return-case.base {
+  background: rgba(255, 74, 28, 0.04);
+}
+.return-case-label {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel);
+}
+.return-case-moic {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(80px, 14vw, 200px);
+  line-height: 0.9; letter-spacing: -0.05em;
+  margin: 20px 0;
+}
+.return-case.base .return-case-moic { color: var(--heat); }
+.return-case-body {
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  display: flex; justify-content: space-between;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--bone-2);
+}
+.return-case-body + .return-case-body { margin-top: 10px; }
+
+.downside {
+  margin-top: 60px;
+  padding: 32px;
+  border: 1px solid var(--line);
+  font-family: var(--f-display); font-style: italic;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--bone-2);
+}
+.downside strong { color: var(--heat); font-style: normal; font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 10px; }
+
+/* ============================================================
+   CLOSE / CTA
+   ============================================================ */
+.close {
+  border-top: 1px solid var(--line);
+  padding: 180px 48px 80px;
+  position: relative;
+  overflow: hidden;
+}
+@media (max-width: 780px) { .close { padding: 100px 24px 60px; } }
+
+.close-inner {
+  max-width: 1440px; margin: 0 auto;
+  position: relative; z-index: 2;
+}
+
+.close-hed {
+  font-family: var(--f-sans); font-weight: 500;
+  font-size: clamp(56px, 13vw, 240px);
+  line-height: 0.85; letter-spacing: -0.04em;
+  margin: 40px 0;
+}
+.close-hed .serif { color: var(--heat); display: block; }
+.close-hed .b { display: block; }
+
+.close-sub-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 32px;
+  border-top: 1px solid var(--line);
+  padding-top: 40px;
+  margin-top: 40px;
+}
+@media (max-width: 900px) { .close-sub-grid { grid-template-columns: 1fr 1fr; } }
+.close-stat-l {
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel); margin-bottom: 10px;
+}
+.close-stat-v {
+  font-family: var(--f-display); font-style: italic;
+  font-size: clamp(28px, 3vw, 44px); line-height: 1;
+}
+.close-stat-v .num { font-style: normal; font-family: var(--f-sans); font-weight: 500; color: var(--heat); }
+
+.close-cta {
+  margin-top: 100px;
+  display: flex; flex-wrap: wrap; gap: 16px; align-items: center;
+}
+.btn {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 22px 32px;
+  font-family: var(--f-mono); font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  border: 1px solid var(--line-2);
+  background: transparent;
+  color: var(--bone);
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+.btn:hover { background: var(--bone); color: var(--ink); border-color: var(--bone); }
+.btn.primary {
+  background: var(--heat); color: var(--ink);
+  border-color: var(--heat);
+}
+.btn.primary:hover { background: var(--bone); border-color: var(--bone); }
+.btn .arrow {
+  display: inline-block;
+  transition: transform 0.3s;
+}
+.btn:hover .arrow { transform: translateX(6px); }
+
+/* footer */
+.footer {
+  border-top: 1px solid var(--line);
+  padding: 40px 48px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 20px;
+  font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--steel);
+}
+@media (max-width: 780px) { .footer { padding: 24px; } }
+
+/* utility animation classes */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.9, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+.reveal.in { opacity: 1; transform: translateY(0); }
+
+.split-line {
+  display: block;
+  overflow: hidden;
+}
+.split-line > span {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 1.1s cubic-bezier(0.2, 0.9, 0.2, 1);
+}
+.split-line.in > span { transform: translateY(0); }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; background: var(--ink); }
+::-webkit-scrollbar-thumb { background: var(--ink-3); }
+::-webkit-scrollbar-thumb:hover { background: var(--heat); }
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+<!-- ============================ NAV ============================ -->
+<nav class="nav">
+  <div class="nav-brand">
+    <div class="nav-brand-mark"></div>
+    <span>HIALEAH&nbsp;·&nbsp;VENTURE STUDIO</span>
+  </div>
+  <div class="nav-links">
+    <span data-to="problem">Problem</span>
+    <span data-to="sprint">Sprint</span>
+    <span data-to="facility">Facility</span>
+    <span data-to="sectors">Sectors</span>
+    <span data-to="returns">Returns</span>
+    <span data-to="close">Raise</span>
+  </div>
+  <div class="nav-right">
+    <div class="nav-pulse"></div>
+    <span>SEED · 2026 · LIVE</span>
+  </div>
+</nav>
+
+<!-- ============================ HERO ============================ -->
+<section class="hero" id="hero">
+  <canvas class="hero-canvas" id="heroCanvas"></canvas>
+
+  <div class="hero-top">
+    <div class="hero-top-meta">
+      <div>§ 01 / <strong>Y COMBINATOR FOR ATOMS</strong></div>
+      <div>HIALEAH, FL · NW 15TH AVE · 45,000 SQ FT</div>
+      <div>M1/M2 INDUSTRIAL · CONFIDENTIAL · 2026</div>
+    </div>
+    <div class="hero-top-meta" style="text-align:right">
+      <div>N 25.857° · W 80.278°</div>
+      <div>5 FLOORS · 120 COS/YR</div>
+      <div>GHOST LAB CREW ONLINE</div>
+    </div>
+  </div>
+
+  <h1 class="hero-title">
+    <span class="line"><span class="word">Hardware</span></span>
+    <span class="line"><span class="word serif">founders</span></span>
+    <span class="line"><span class="word">die&nbsp;before</span></span>
+    <span class="line"><span class="word">they&nbsp;build.</span></span>
+  </h1>
+
+  <div class="hero-bottom">
+    <div class="hero-pitch">
+      <div class="mono" style="color:var(--heat); margin-bottom:14px">§ THE THESIS</div>
+      A high-volume deep-tech venture studio for robotics, aerospace, AI hardware, defense, and medical devices — built inside a 45,000 sq ft vertical factory.
+    </div>
+    <div>
+      <div class="hero-stat-label">THE ASK</div>
+      <div class="hero-stat-val"><span class="num">$4.125</span>M</div>
+      <div class="hero-stat-sub">Seed equity</div>
+    </div>
+    <div>
+      <div class="hero-stat-label">TOTAL PROJECT</div>
+      <div class="hero-stat-val"><span class="num">$7.5</span>M</div>
+      <div class="hero-stat-sub">Fully-funded facility</div>
+    </div>
+    <div>
+      <div class="hero-stat-label">YEAR 5 MOIC — BASE</div>
+      <div class="hero-stat-val"><span class="num">8.7</span>×</div>
+      <div class="hero-stat-sub">Gross, real-estate floored</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ TICKER ============================ -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span>Y COMBINATOR FOR ATOMS</span><span class="dot"></span>
+    <span class="heat">120 SHOTS ON GOAL / YEAR</span><span class="dot"></span>
+    <span>$1M+ EQUIPMENT STACK</span><span class="dot"></span>
+    <span class="heat">60-DAY SPRINT</span><span class="dot"></span>
+    <span>5% EQUITY · ZERO CASH</span><span class="dot"></span>
+    <span class="heat">ASSET-BACKED DOWNSIDE</span><span class="dot"></span>
+    <span>Y COMBINATOR FOR ATOMS</span><span class="dot"></span>
+    <span class="heat">120 SHOTS ON GOAL / YEAR</span><span class="dot"></span>
+    <span>$1M+ EQUIPMENT STACK</span><span class="dot"></span>
+    <span class="heat">60-DAY SPRINT</span><span class="dot"></span>
+    <span>5% EQUITY · ZERO CASH</span><span class="dot"></span>
+    <span class="heat">ASSET-BACKED DOWNSIDE</span><span class="dot"></span>
+  </div>
+</div>
+
+<!-- ============================ PROBLEM ============================ -->
+<section class="problem" id="problem">
+  <div class="problem-header">
+    <div>
+      <div class="eyebrow">§ 02 / The Valley of Death</div>
+      <h2 class="problem-hed">
+        Hardware founders die<br/>
+        <span class="serif">before</span> they build<br/>
+        a prototype —<br/>
+        not after.
+      </h2>
+    </div>
+    <div>
+      <p class="problem-copy reveal">
+        A working prototype needs $500K–$2M of capital equipment, industrial power, clean rooms, and specialist technicians. None of it fits in a garage. All of it is priced out of a pre-seed check.
+      </p>
+    </div>
+  </div>
+
+  <div class="problem-70">
+    <div class="problem-70-num" data-counter="70" data-suffix="%">0%</div>
+    <div class="problem-70-copy">
+      of hardware startups fail before reaching a functional prototype.
+    </div>
+  </div>
+
+  <div class="gap-grid">
+    <div class="gap-cell reveal">
+      <div class="gap-cell-num">01 / CAPITAL</div>
+      <div class="gap-cell-h">The check gap</div>
+      <div class="gap-cell-p">$500K–$2M in capital equipment required before a founder can ship revenue.</div>
+    </div>
+    <div class="gap-cell reveal">
+      <div class="gap-cell-num">02 / FACILITY</div>
+      <div class="gap-cell-h">The space gap</div>
+      <div class="gap-cell-p">Industrial power, ESD flooring, clean rooms. None of it fits in a WeWork.</div>
+    </div>
+    <div class="gap-cell reveal">
+      <div class="gap-cell-num">03 / EXPERTISE</div>
+      <div class="gap-cell-h">The crew gap</div>
+      <div class="gap-cell-p">CNC, PCB, welding, FAA/FDA — specialist salaries exceed a typical pre-seed round.</div>
+    </div>
+    <div class="gap-cell reveal">
+      <div class="gap-cell-num">04 / TIME</div>
+      <div class="gap-cell-h">The runway gap</div>
+      <div class="gap-cell-p">40–60% of burn spent on logistics, vendor hunts, and permits — not on building.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ OPPORTUNITY ============================ -->
+<section class="opportunity" id="opportunity">
+  <div class="opp-hed">
+    <div class="eyebrow">§ 03 / Why now</div>
+    <h2 class="opp-hed-big">
+      Software is saturated.<br/>
+      <span class="serif">Atoms</span> are where the next decade of returns live.
+    </h2>
+  </div>
+
+  <div class="markets">
+    <div class="market reveal">
+      <div class="market-sector">AI HARDWARE</div>
+      <div>
+        <div class="market-num">$120<span style="font-size:0.4em">B</span></div>
+        <div class="market-cagr">~20% CAGR · 2030</div>
+      </div>
+    </div>
+    <div class="market reveal">
+      <div class="market-sector">ROBOTICS</div>
+      <div>
+        <div class="market-num">$70<span style="font-size:0.4em">B</span></div>
+        <div class="market-cagr">~15% CAGR · 2030</div>
+      </div>
+    </div>
+    <div class="market reveal">
+      <div class="market-sector">COMMERCIAL SPACE</div>
+      <div>
+        <div class="market-num">$630<span style="font-size:0.4em">B</span></div>
+        <div class="market-cagr">~9% CAGR · 2030</div>
+      </div>
+    </div>
+    <div class="market reveal">
+      <div class="market-sector">MEDICAL DEVICES</div>
+      <div>
+        <div class="market-num">$570<span style="font-size:0.4em">B</span></div>
+        <div class="market-cagr">~6% CAGR · 2030</div>
+      </div>
+    </div>
+    <div class="market reveal">
+      <div class="market-sector">DEFENSE TECH</div>
+      <div>
+        <div class="market-num">$9<span style="font-size:0.4em">B</span></div>
+        <div class="market-cagr">~18% CAGR · Private</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tailwinds">
+    <div>FEDERAL TAILWINDS</div>
+    <span>CHIPS ACT · $280B AUTHORIZED</span>
+    <span>IRA · ~$370B ADVANCED MANUFACTURING</span>
+    <span>DIU · AFWERX · SOFWERX</span>
+    <span>SBIR/STTR · $4B/YR</span>
+  </div>
+</section>
+
+<!-- ============================ SPRINT ============================ -->
+<section class="sprint" id="sprint">
+  <div class="sprint-intro">
+    <div class="eyebrow">§ 04 / The 60-day Sprint</div>
+    <h2 class="sprint-hed">
+      Compress <span class="serif heat">18 months</span><br/>
+      of hardware<br/>
+      into <span class="heat">60 days.</span>
+    </h2>
+    <div class="sprint-sub">
+      <div class="sprint-sub-item reveal">
+        <strong>20×</strong>
+        <span>Founding teams / sprint</span>
+      </div>
+      <div class="sprint-sub-item reveal">
+        <strong>6×</strong>
+        <span>Sprints / year</span>
+      </div>
+      <div class="sprint-sub-item reveal">
+        <strong>5%</strong>
+        <span>Equity · that's the only cost</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sprint-track-wrap">
+    <div class="sprint-track-pin">
+      <div class="sprint-track-head">
+        <span>↓ SCROLL · THE 60-DAY SPRINT</span>
+        <span class="heat">▌ LIVE SIMULATION</span>
+      </div>
+      <div class="sprint-track" id="sprintTrack">
+        <div class="sprint-step">
+          <div>
+            <div class="sprint-step-n">STEP 01 · DAYS 1–7</div>
+            <div class="sprint-step-days">ON-<br/>BOARD</div>
+          </div>
+          <div>
+            <div class="sprint-step-title">IP assignment · Facility cert · Architecture review</div>
+            <div class="sprint-step-desc">Founders sign in, complete IP assignment, pass facility cert, and submit an architecture brief. Ghost Lab is assigned.</div>
+          </div>
+          <div class="sprint-step-tag">01/06</div>
+        </div>
+        <div class="sprint-step">
+          <div>
+            <div class="sprint-step-n">STEP 02 · DAYS 8–30</div>
+            <div class="sprint-step-days">RAPID<br/>PROTO</div>
+          </div>
+          <div>
+            <div class="sprint-step-title">First functional prototype by Day 30.</div>
+            <div class="sprint-step-desc">CNC, PCB, and cleanroom open 24/7. Ghost Lab technicians execute. Teams physically migrate upward as the product matures.</div>
+          </div>
+          <div class="sprint-step-tag">02/06</div>
+        </div>
+        <div class="sprint-step">
+          <div>
+            <div class="sprint-step-n">STEP 03 · DAYS 31–45</div>
+            <div class="sprint-step-days">REFINE</div>
+          </div>
+          <div>
+            <div class="sprint-step-title">Iteration · Regulatory pre-consult · Pitch build</div>
+            <div class="sprint-step-desc">On-site FAA/FDA pre-consult. Investor narrative gets built beside the product. Model pressure-testing begins.</div>
+          </div>
+          <div class="sprint-step-tag">03/06</div>
+        </div>
+        <div class="sprint-step">
+          <div>
+            <div class="sprint-step-n">STEP 04 · DAY 45</div>
+            <div class="sprint-step-days">FILM</div>
+          </div>
+          <div>
+            <div class="sprint-step-title">Professional launch video, on-site.</div>
+            <div class="sprint-step-desc">Full media studio on Floor 5. Directors, lighting, sound. Every team leaves with a cinematic launch reel.</div>
+          </div>
+          <div class="sprint-step-tag">04/06</div>
+        </div>
+        <div class="sprint-step">
+          <div>
+            <div class="sprint-step-n">STEP 05 · DAYS 46–58</div>
+            <div class="sprint-step-days">POLISH</div>
+          </div>
+          <div>
+            <div class="sprint-step-title">Rehearsals · Model pressure-test · Extension call</div>
+            <div class="sprint-step-desc">Investor-in-Residence sessions. Extension offers go out to the standout teams. The rest rehearse.</div>
+          </div>
+          <div class="sprint-step-tag">05/06</div>
+        </div>
+        <div class="sprint-step">
+          <div>
+            <div class="sprint-step-n">STEP 06 · DAYS 59–60</div>
+            <div class="sprint-step-days heat">DEMO<br/>DAY</div>
+          </div>
+          <div>
+            <div class="sprint-step-title">Curated investor audience · Extensions offered.</div>
+            <div class="sprint-step-desc">Seed & Series A investors in the Demo Stage. Standout teams get extension contracts on the night.</div>
+          </div>
+          <div class="sprint-step-tag heat">06/06</div>
+        </div>
+      </div>
+      <div class="sprint-progress">
+        <div class="sprint-progress-bar" id="sprintBar"></div>
+        <div class="sprint-progress-num" id="sprintPct">00%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FACILITY / TOWER ============================ -->
+<section class="facility" id="facility">
+  <div class="facility-intro">
+    <div class="eyebrow">§ 05 / The Vertical Factory</div>
+    <h2 class="facility-hed">
+      A 45,000&nbsp;sq&nbsp;ft<br/>
+      <span class="serif">vertical factory</span><br/>
+      engineered floor-by-floor.
+    </h2>
+  </div>
+
+  <div class="facility-stats">
+    <div class="reveal">
+      <div class="fstat-n" data-counter="45" data-suffix="K">0K</div>
+      <div class="fstat-l">Square feet</div>
+      <div class="fstat-sub">5 floors · purpose-built</div>
+    </div>
+    <div class="reveal">
+      <div class="fstat-n">$1M+</div>
+      <div class="fstat-l">Equipment stack</div>
+      <div class="fstat-sub">CNC · PCB · H100 · cleanroom · drones</div>
+    </div>
+    <div class="reveal">
+      <div class="fstat-n" data-counter="8" data-suffix="×">0×</div>
+      <div class="fstat-l">Ghost Lab Crew</div>
+      <div class="fstat-sub">Specialist techs — execute, do not teach</div>
+    </div>
+    <div class="reveal">
+      <div class="fstat-n" data-counter="120" data-suffix="/yr">0/yr</div>
+      <div class="fstat-l">Throughput</div>
+      <div class="fstat-sub">6 cohorts × 20 teams · steady state</div>
+    </div>
+  </div>
+
+  <div class="tower-scene" id="towerScene">
+    <div class="tower-pin">
+      <div class="tower-stage">
+        <div class="tower-3d" id="tower3d">
+          <!-- 5 floor boxes injected + ground-plane -->
+          <div class="floor-box" data-fl="1" style="bottom:0">
+            <span class="floor-face" data-fl="1">
+              <span>THE HEAVY WORKS</span><span class="n">01</span>
+            </span>
+          </div>
+          <div class="floor-box" data-fl="2" style="bottom:100px">
+            <span class="floor-face" data-fl="2">
+              <span>ROBOTICS ARENA</span><span class="n">02</span>
+            </span>
+          </div>
+          <div class="floor-box" data-fl="3" style="bottom:200px">
+            <span class="floor-face" data-fl="3">
+              <span>ELECTRONICS / CLEAN</span><span class="n">03</span>
+            </span>
+          </div>
+          <div class="floor-box" data-fl="4" style="bottom:300px">
+            <span class="floor-face" data-fl="4">
+              <span>AI WAR ROOM</span><span class="n">04</span>
+            </span>
+          </div>
+          <div class="floor-box" data-fl="5" style="bottom:400px">
+            <span class="floor-face" data-fl="5">
+              <span>SCALE-UP / ECOSYSTEM</span><span class="n">05</span>
+            </span>
+          </div>
+          <div class="tower-axis">
+            <span>L 1</span><span>L 2</span><span>L 3</span><span>L 4</span><span>L 5</span>
+          </div>
+          <div class="tower-ground"></div>
+        </div>
+      </div>
+
+      <div class="tower-info">
+        <div class="tower-info-header">
+          <span>§ 06 · FLOOR SELECT</span>
+          <span class="heat" id="floorIdx">01 / 05</span>
+        </div>
+
+        <div class="floor-card active" data-floor="1">
+          <div class="floor-card-n">01</div>
+          <div class="floor-card-name">The Heavy Works</div>
+          <div class="floor-card-desc">"Metal enters the building here. Everything downstream depends on this floor."</div>
+          <ul class="floor-card-list">
+            <li><span class="t">CNC Mills · 5-axis</span><span class="v">02 bays</span></li>
+            <li><span class="t">Waterjet Cutting</span><span class="v">Omax 55100</span></li>
+            <li><span class="t">Metal &amp; Concrete 3D Print</span><span class="v">MX3D / D-Shape</span></li>
+            <li><span class="t">Welding Bays</span><span class="v">TIG · MIG · stick</span></li>
+          </ul>
+        </div>
+
+        <div class="floor-card" data-floor="2">
+          <div class="floor-card-n">02</div>
+          <div class="floor-card-name">Robotics &amp; Mechatronics Arena</div>
+          <div class="floor-card-desc">"Drones fly here. Cobots load here. Failure is cheap — the sandpit absorbs it."</div>
+          <ul class="floor-card-list">
+            <li><span class="t">Drone Flight Cage</span><span class="v">40ft enclosed</span></li>
+            <li><span class="t">Sandpit &amp; Terrain Rigs</span><span class="v">Outdoor sim</span></li>
+            <li><span class="t">ROS Dev Kits</span><span class="v">20× stations</span></li>
+            <li><span class="t">5-axis CNC</span><span class="v">Precision runs</span></li>
+          </ul>
+        </div>
+
+        <div class="floor-card" data-floor="3">
+          <div class="floor-card-n">03</div>
+          <div class="floor-card-name">Electronics &amp; Clean Lab</div>
+          <div class="floor-card-desc">"Silicon meets PCB. ESD-safe floor, pick-and-place, and a Class 1000 room."</div>
+          <ul class="floor-card-list">
+            <li><span class="t">ESD-safe Flooring</span><span class="v">Full floor</span></li>
+            <li><span class="t">Pick-and-place PCB</span><span class="v">Mycronic MY200</span></li>
+            <li><span class="t">Cleanroom</span><span class="v">ISO 6 · Class 1000</span></li>
+            <li><span class="t">Reflow / Soldering</span><span class="v">06 stations</span></li>
+          </ul>
+        </div>
+
+        <div class="floor-card" data-floor="4">
+          <div class="floor-card-n">04</div>
+          <div class="floor-card-name">AI "War Room"</div>
+          <div class="floor-card-desc">"An on-site H100 cluster means the hardware founder trains models beside the hardware."</div>
+          <ul class="floor-card-list">
+            <li><span class="t">H100 Cluster · On-site</span><span class="v">08 GPU · private</span></li>
+            <li><span class="t">VR / AR Dev Bays</span><span class="v">04 stations</span></li>
+            <li><span class="t">Private Training Racks</span><span class="v">Air-gapped opt.</span></li>
+            <li><span class="t">Thermal / Perf Lab</span><span class="v">Chamber access</span></li>
+          </ul>
+        </div>
+
+        <div class="floor-card" data-floor="5">
+          <div class="floor-card-n">05</div>
+          <div class="floor-card-name">Scale-Up &amp; Ecosystem Hub</div>
+          <div class="floor-card-desc">"The top of the stack is narrative. Demos, film, IP, capital — all in one loop."</div>
+          <ul class="floor-card-list">
+            <li><span class="t">Media Studio</span><span class="v">4K · soundproof</span></li>
+            <li><span class="t">Demo Stage</span><span class="v">150-seat</span></li>
+            <li><span class="t">Investor-in-Residence</span><span class="v">Monthly</span></li>
+            <li><span class="t">Patent Office</span><span class="v">On-site IP counsel</span></li>
+          </ul>
+        </div>
+
+        <div class="tower-hint">
+          <span>↕ SCROLL · MIGRATE UPWARD AS PRODUCT MATURES</span>
+          <span>TEAMS PHYSICALLY MOVE FLOORS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SECTORS ============================ -->
+<section class="sectors" id="sectors">
+  <div class="sectors-inner">
+    <div class="eyebrow">§ 07 / Five markets · One building</div>
+    <h2 class="sectors-hed">
+      Five markets.<br/>
+      One <span class="serif">geographic edge.</span>
+    </h2>
+
+    <div class="sectors-table">
+      <div class="sectors-th">Sector</div>
+      <div class="sectors-th">Hialeah Advantage</div>
+      <div class="sectors-th">Primary Floor Resources</div>
+      <div class="sectors-th">Exit Profile</div>
+
+      <div class="sectors-row">
+        <div class="sectors-cell name">Robotics</div>
+        <div class="sectors-cell">Legacy manufacturing base · logistics infrastructure</div>
+        <div class="sectors-cell">Cobots · ROS dev kits · drone cages · sandpit testing</div>
+        <div class="sectors-cell">Automation OEMs · logistics strategics</div>
+      </div>
+      <div class="sectors-row">
+        <div class="sectors-cell name">Aerospace</div>
+        <div class="sectors-cell">Space Coast · KSC &lt; 4 hrs · supplier network</div>
+        <div class="sectors-cell">Vacuum chambers · carbon fiber · precision CNC</div>
+        <div class="sectors-cell">Prime contractors · launch partnerships</div>
+      </div>
+      <div class="sectors-row">
+        <div class="sectors-cell name">Defense &amp; GovTech</div>
+        <div class="sectors-cell">USSOUTHCOM Doral · Homestead ARB · dual-use supply</div>
+        <div class="sectors-cell">Hardened electronics · secure cells · air-gapped compute</div>
+        <div class="sectors-cell">DoD contracts · defense primes · OTA vehicles</div>
+      </div>
+      <div class="sectors-row">
+        <div class="sectors-cell name">AI Hardware</div>
+        <div class="sectors-cell">Highest-growth segment · CHIPS Act tailwind</div>
+        <div class="sectors-cell">On-site H100 cluster · PCB · thermal testing</div>
+        <div class="sectors-cell">Hyperscaler acquisition · acquihire</div>
+      </div>
+      <div class="sectors-row">
+        <div class="sectors-cell name">Medical Devices</div>
+        <div class="sectors-cell">South Florida healthcare cluster · high-margin exits</div>
+        <div class="sectors-cell">Bio-printers · sterile environments · regulatory desk</div>
+        <div class="sectors-cell">Medtech incumbents · FDA-path licensing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ECONOMICS ============================ -->
+<section class="economics" id="economics">
+  <div class="economics-inner">
+    <div class="eyebrow">§ 08 / The Equity Engine</div>
+    <h2 class="economics-hed">
+      We underwrite<br/>
+      the <span class="serif">law of large numbers.</span>
+    </h2>
+
+    <div class="equation">
+      <div class="eq-item">
+        <div class="eq-n">120</div>
+        <div class="eq-l">Companies / yr</div>
+      </div>
+      <div class="eq-op">×</div>
+      <div class="eq-item">
+        <div class="eq-n">15%</div>
+        <div class="eq-l">Success rate</div>
+      </div>
+      <div class="eq-op">×</div>
+      <div class="eq-item">
+        <div class="eq-n">$10M</div>
+        <div class="eq-l">Avg Series A</div>
+      </div>
+      <div class="eq-op">×</div>
+      <div class="eq-item">
+        <div class="eq-n">5%</div>
+        <div class="eq-l">Stake · uniform</div>
+      </div>
+      <div class="eq-op">=</div>
+      <div class="eq-item eq-result">
+        <div class="eq-n">$9M</div>
+        <div class="eq-l">Equity revenue / yr</div>
+      </div>
+    </div>
+
+    <div class="eyebrow" style="margin-top:80px">§ 10 / 5-year Projections</div>
+    <div class="financials">
+      <div class="fin-year reveal">
+        <div class="fin-year-label">FY 2025</div>
+        <div class="fin-year-rev">$3.4M</div>
+        <div class="fin-year-ebitda">34% EBITDA</div>
+        <div class="fin-year-desc">3 cohorts · 60 companies<br/>RAMP BEGINS</div>
+        <div class="fin-year-bar" style="--w:15%"></div>
+      </div>
+      <div class="fin-year reveal">
+        <div class="fin-year-label">FY 2026</div>
+        <div class="fin-year-rev">$8.1M</div>
+        <div class="fin-year-ebitda">68% EBITDA</div>
+        <div class="fin-year-desc">5 cohorts · 100 companies<br/>DEBT SERVICED</div>
+        <div class="fin-year-bar" style="--w:37%"></div>
+      </div>
+      <div class="fin-year reveal">
+        <div class="fin-year-label">FY 2027</div>
+        <div class="fin-year-rev">$14.8M</div>
+        <div class="fin-year-ebitda">79% EBITDA</div>
+        <div class="fin-year-desc">6 cohorts · 120 companies<br/>STEADY STATE</div>
+        <div class="fin-year-bar" style="--w:68%"></div>
+      </div>
+      <div class="fin-year reveal">
+        <div class="fin-year-label">FY 2028</div>
+        <div class="fin-year-rev">$18.3M</div>
+        <div class="fin-year-ebitda">81% EBITDA</div>
+        <div class="fin-year-desc">Steady state<br/>FIRST EXITS LAND</div>
+        <div class="fin-year-bar" style="--w:84%"></div>
+      </div>
+      <div class="fin-year reveal">
+        <div class="fin-year-label">FY 2029</div>
+        <div class="fin-year-rev">$21.8M</div>
+        <div class="fin-year-ebitda">83% EBITDA</div>
+        <div class="fin-year-desc">Steady state<br/>NET INCOME $17.6M</div>
+        <div class="fin-year-bar" style="--w:100%"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MOAT ============================ -->
+<section class="moat" id="moat">
+  <div class="moat-inner">
+    <div class="eyebrow">§ 11 / The Facility is the Moat</div>
+    <h2 class="moat-hed">
+      <span class="serif">$6.8M</span> of dirt,<br/>
+      steel, and silicon —<br/>
+      a software accelerator<br/>
+      cannot replicate.
+    </h2>
+
+    <div class="moat-grid">
+      <div class="moat-copy reveal">
+        Competitors would need real estate acquisition skill, 9–18 months of construction, and a specialist operating team to match us. By then, we have three years of cohort data and a half-dozen break-outs.
+      </div>
+      <div>
+        <div class="mono" style="color:var(--heat); margin-bottom:8px">PHYSICAL · GEOGRAPHIC · NETWORK</div>
+        <div class="serif" style="font-size:28px; line-height:1.2">Integration<br/>is the edge.</div>
+      </div>
+    </div>
+
+    <div class="moat-table">
+      <div class="moat-th">Operator</div>
+      <div class="moat-th">Hardware-first</div>
+      <div class="moat-th">Cos/yr</div>
+      <div class="moat-th">Infrastructure</div>
+      <div class="moat-th">Owns RE</div>
+
+      <div class="moat-row">
+        <div class="moat-cell op">Y Combinator</div>
+        <div class="moat-cell">Limited</div>
+        <div class="moat-cell">~200</div>
+        <div class="moat-cell">Office only</div>
+        <div class="moat-cell">—</div>
+      </div>
+      <div class="moat-row">
+        <div class="moat-cell op">Techstars</div>
+        <div class="moat-cell">Some verticals</div>
+        <div class="moat-cell">~500</div>
+        <div class="moat-cell">Varies by city</div>
+        <div class="moat-cell">—</div>
+      </div>
+      <div class="moat-row">
+        <div class="moat-cell op">HAX (SOSV)</div>
+        <div class="moat-cell">Yes</div>
+        <div class="moat-cell">30–40</div>
+        <div class="moat-cell">Shenzhen / Newark</div>
+        <div class="moat-cell">Leased</div>
+      </div>
+      <div class="moat-row us">
+        <div class="moat-cell op">Hialeah Studio</div>
+        <div class="moat-cell">Exclusively</div>
+        <div class="moat-cell">120</div>
+        <div class="moat-cell">45K sq ft vertical factory</div>
+        <div class="moat-cell">Owned</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ RETURNS ============================ -->
+<section class="returns" id="returns">
+  <div class="returns-inner">
+    <div class="eyebrow">§ 13 / Seed Investor MOIC · Y5</div>
+    <h2 class="returns-hed">
+      <span class="serif">4.4×</span> to <span class="serif">14.5×</span><br/>
+      in five years —<br/>
+      with a real-estate floor.
+    </h2>
+
+    <div class="returns-grid">
+      <div class="return-case reveal">
+        <div class="return-case-label">BEAR · 3× FWD REVENUE</div>
+        <div class="return-case-moic">4.4×</div>
+        <div class="return-case-body">
+          <span>Y5 COMPANY VALUE</span><span>$65.3M</span>
+        </div>
+        <div class="return-case-body">
+          <span>SEED SHARE · 27.5%</span><span>$17.9M</span>
+        </div>
+      </div>
+      <div class="return-case base reveal">
+        <div class="return-case-label">BASE · 6× FWD REVENUE</div>
+        <div class="return-case-moic">8.7×</div>
+        <div class="return-case-body">
+          <span>Y5 COMPANY VALUE</span><span>$130.5M</span>
+        </div>
+        <div class="return-case-body">
+          <span>SEED SHARE · 27.5%</span><span>$35.9M</span>
+        </div>
+      </div>
+      <div class="return-case reveal">
+        <div class="return-case-label">BULL · 10× FWD REVENUE</div>
+        <div class="return-case-moic">14.5×</div>
+        <div class="return-case-body">
+          <span>Y5 COMPANY VALUE</span><span>$217.5M</span>
+        </div>
+        <div class="return-case-body">
+          <span>SEED SHARE · 27.5%</span><span>$59.8M</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="downside">
+      <strong>§ Downside Floor</strong>
+      At zero startup exits, HoldCo real estate (~$5.3M) + services ARR (~$5M × 3–5×) recapture most of invested capital. Asymmetric risk profile: floored downside, venture upside.
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CLOSE / CTA ============================ -->
+<section class="close" id="close">
+  <div class="close-inner">
+    <div class="eyebrow">§ 14 / The Close</div>
+    <h1 class="close-hed">
+      <span class="b">120 shots</span>
+      <span class="serif">on goal,</span>
+      <span class="b">a year.</span>
+    </h1>
+    <p style="max-width:60ch; font-size:18px; color:var(--bone-2); line-height:1.5">
+      Asset-backed downside. Venture-scale upside. Built inside a 45,000 sq ft vertical factory in Hialeah, Florida. The first sprint opens 8 months post-close.
+    </p>
+
+    <div class="close-sub-grid">
+      <div>
+        <div class="close-stat-l">RAISE</div>
+        <div class="close-stat-v"><span class="num">$4.125</span>M</div>
+      </div>
+      <div>
+        <div class="close-stat-l">POST-MONEY</div>
+        <div class="close-stat-v">~<span class="num">$15</span>M</div>
+      </div>
+      <div>
+        <div class="close-stat-l">FIRST SPRINT</div>
+        <div class="close-stat-v">Month <span class="num">8</span></div>
+      </div>
+      <div>
+        <div class="close-stat-l">BASE CASE Y5</div>
+        <div class="close-stat-v"><span class="num">8.7</span>×</div>
+      </div>
+    </div>
+
+    <div class="close-cta">
+      <a href="#" class="btn primary">Request data room <span class="arrow">→</span></a>
+      <a href="#" class="btn">Founders: join a sprint <span class="arrow">→</span></a>
+    </div>
+
+    <div style="margin-top:120px; display:grid; grid-template-columns:1fr 1fr; gap:60px; border-top:1px solid var(--line); padding-top:40px">
+      <div>
+        <div class="mono" style="color:var(--heat); margin-bottom:12px">ORG STRUCTURE</div>
+        <div style="font-family:var(--f-display); font-style:italic; font-size:24px; line-height:1.3">
+          HoldCo owns the building + SBA 504.<br/>
+          OpCo runs the sprint + holds 5% portfolio equity.
+        </div>
+      </div>
+      <div>
+        <div class="mono" style="color:var(--heat); margin-bottom:12px">LEADERSHIP · 4 ROLES</div>
+        <div style="font-family:var(--f-mono); font-size:12px; letter-spacing:0.1em; text-transform:uppercase; line-height:2; color:var(--bone-2)">
+          CEO · Strategy, IR, Partnerships, Sourcing<br/>
+          COO · Facility, Ghost Lab, Finance, HR<br/>
+          HEAD OF TECH OPS · Equipment, Curriculum<br/>
+          HEAD OF BD · Corporate, University, Gov
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="footer">
+  <div>HIALEAH VENTURE STUDIO · 2026 · CONFIDENTIAL SEED MATERIALS</div>
+  <div>Y COMBINATOR · FOR · ATOMS</div>
+  <div>HIALEAH, FL · NW 15TH AVE</div>
+</footer>
+
+<!-- ============================ SCRIPTS ============================ -->
+<script>
+/* ============================================================
+   HIALEAH VENTURE STUDIO — interactions
+   GSAP + custom 3D tower
+   ============================================================ */
+
+gsap.registerPlugin(ScrollTrigger);
+
+/* ---------- nav links ---------- */
+document.querySelectorAll('.nav-links span').forEach(el => {
+  el.addEventListener('click', () => {
+    const to = document.getElementById(el.dataset.to);
+    if (to) window.scrollTo({ top: to.offsetTop - 60, behavior: 'smooth' });
+  });
+});
+
+/* ============================================================
+   HERO — title split reveal + canvas particles
+   ============================================================ */
+(function heroIntro() {
+  // Stagger-reveal the big hero words.
+  const words = document.querySelectorAll('.hero-title .word');
+  gsap.set(words, { y: '110%', opacity: 0 });
+  gsap.to(words, {
+    y: '0%',
+    opacity: 1,
+    duration: 1.2,
+    ease: 'power4.out',
+    stagger: 0.08,
+    delay: 0.2,
+  });
+
+  // Hero bottom stats fade in
+  gsap.from('.hero-bottom > div', {
+    opacity: 0,
+    y: 24,
+    duration: 0.9,
+    ease: 'power3.out',
+    stagger: 0.08,
+    delay: 0.8,
+  });
+  gsap.from('.hero-top-meta > div', {
+    opacity: 0,
+    y: -10,
+    duration: 0.6,
+    stagger: 0.06,
+    delay: 0.1,
+  });
+})();
+
+/* ---------- hero canvas: floating industrial particles + scanlines ---------- */
+(function heroCanvas() {
+  const canvas = document.getElementById('heroCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w, h, dpr;
+  let particles = [];
+
+  function resize() {
+    dpr = Math.min(2, window.devicePixelRatio || 1);
+    w = canvas.clientWidth = canvas.parentElement.clientWidth;
+    h = canvas.clientHeight = canvas.parentElement.clientHeight;
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    particles = [];
+    const count = Math.min(80, Math.floor((w * h) / 18000));
+    for (let i = 0; i < count; i++) {
+      particles.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        z: Math.random() * 0.8 + 0.2,
+        vx: (Math.random() - 0.5) * 0.15,
+        vy: (Math.random() - 0.5) * 0.15,
+        r: Math.random() * 1.4 + 0.3,
+      });
+    }
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  let mx = 0, my = 0, tmx = 0, tmy = 0;
+  window.addEventListener('mousemove', (e) => {
+    const rect = canvas.getBoundingClientRect();
+    tmx = (e.clientX - rect.left - w / 2) / w;
+    tmy = (e.clientY - rect.top - h / 2) / h;
+  });
+
+  function loop() {
+    mx += (tmx - mx) * 0.05;
+    my += (tmy - my) * 0.05;
+
+    ctx.clearRect(0, 0, w, h);
+
+    // subtle grid
+    ctx.strokeStyle = 'rgba(245, 241, 232, 0.035)';
+    ctx.lineWidth = 1;
+    const g = 80;
+    const ox = (mx * 20) % g;
+    const oy = (my * 20) % g;
+    for (let x = -ox; x < w; x += g) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+    }
+    for (let y = -oy; y < h; y += g) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+    }
+
+    // particles
+    for (const p of particles) {
+      p.x += p.vx + mx * 6 * p.z;
+      p.y += p.vy + my * 6 * p.z;
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+
+      ctx.fillStyle = `rgba(255, 74, 28, ${0.2 + p.z * 0.4})`;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r * p.z * 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // connecting lines (only nearby)
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const a = particles[i], b = particles[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const d = Math.hypot(dx, dy);
+        if (d < 140) {
+          ctx.strokeStyle = `rgba(245, 241, 232, ${(1 - d / 140) * 0.08})`;
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+        }
+      }
+    }
+
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+/* ============================================================
+   GLOBAL reveal observer
+   ============================================================ */
+(function reveals() {
+  const els = document.querySelectorAll('.reveal');
+  // Safety: anything already in/above viewport at page load gets shown immediately.
+  const checkInitial = () => {
+    els.forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (r.top < window.innerHeight * 0.95) el.classList.add('in');
+    });
+  };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('in');
+    });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  els.forEach(el => io.observe(el));
+  checkInitial();
+  window.addEventListener('load', checkInitial);
+})();
+
+/* ============================================================
+   Number counters
+   ============================================================ */
+(function counters() {
+  const format = (v, suffix) => {
+    if (suffix === '%') return Math.round(v) + '%';
+    if (suffix === 'K') return Math.round(v) + 'K';
+    if (suffix === '×') return Math.round(v) + '×';
+    if (suffix === '/yr') return Math.round(v) + '/yr';
+    return Math.round(v) + (suffix || '');
+  };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      const end = parseFloat(el.dataset.counter);
+      const suffix = el.dataset.suffix || '';
+      const obj = { v: 0 };
+      gsap.to(obj, {
+        v: end,
+        duration: 2,
+        ease: 'power3.out',
+        onUpdate: () => { el.textContent = format(obj.v, suffix); },
+      });
+      io.unobserve(el);
+    });
+  }, { threshold: 0.4 });
+  document.querySelectorAll('[data-counter]').forEach(el => io.observe(el));
+})();
+
+/* ============================================================
+   SPRINT — horizontal scroll
+   ============================================================ */
+(function sprint() {
+  const track = document.getElementById('sprintTrack');
+  const wrap = document.querySelector('.sprint-track-wrap');
+  if (!track || !wrap) return;
+
+  const bar = document.getElementById('sprintBar');
+  const pct = document.getElementById('sprintPct');
+
+  function setup() {
+    const distance = track.scrollWidth - window.innerWidth + 96;
+
+    ScrollTrigger.create({
+      trigger: wrap,
+      start: 'top top',
+      end: () => '+=' + distance,
+      scrub: 0.6,
+      pin: '.sprint-track-pin',
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        const x = -distance * self.progress;
+        gsap.set(track, { x });
+        const p = Math.round(self.progress * 100);
+        bar.style.setProperty('--sp', p + '%');
+        pct.textContent = String(p).padStart(2, '0') + '%';
+      },
+    });
+  }
+
+  setup();
+  window.addEventListener('resize', () => ScrollTrigger.refresh());
+})();
+
+/* ============================================================
+   TOWER — 3D vertical factory (CSS transform-based)
+   Pinned section. As user scrolls, the active floor changes,
+   the tower subtly rotates/tilts, and an info card cross-fades.
+   ============================================================ */
+(function tower() {
+  const scene = document.getElementById('towerScene');
+  const tower3d = document.getElementById('tower3d');
+  const floorIdx = document.getElementById('floorIdx');
+  if (!scene || !tower3d) return;
+
+  const faces = tower3d.querySelectorAll('.floor-face');
+  const cards = document.querySelectorAll('.floor-card');
+
+  let currentFloor = 1;
+
+  function setFloor(n) {
+    if (n === currentFloor) return;
+    currentFloor = n;
+    faces.forEach(f => {
+      f.classList.toggle('active', +f.dataset.fl === n);
+    });
+    cards.forEach(c => {
+      c.classList.toggle('active', +c.dataset.floor === n);
+    });
+    floorIdx.textContent = String(n).padStart(2, '0') + ' / 05';
+  }
+
+  // init — floor 1 active
+  setFloor(1);
+
+  ScrollTrigger.create({
+    trigger: scene,
+    start: 'top top',
+    end: 'bottom bottom',
+    pin: '.tower-pin',
+    anticipatePin: 1,
+    scrub: 0.5,
+    onUpdate: (self) => {
+      const p = self.progress;
+
+      // tower rotation: slight Y rotation + pitch as you scroll
+      const ry = -18 + p * 36;   // -18deg -> +18deg
+      const rx = -6 + p * 2;     // small pitch variance
+      const camY = -p * 240;     // "camera" pans up by translating tower down
+
+      tower3d.style.transform =
+        `translateY(${camY}px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+
+      // floor select across 5 bands
+      const n = Math.min(5, Math.floor(p * 5) + 1);
+      setFloor(n);
+    },
+  });
+
+  // initial idle tilt (no scroll yet)
+  tower3d.style.transform = 'translateY(0) rotateX(-6deg) rotateY(-18deg)';
+})();
+
+/* ============================================================
+   Market tiles — number morph on hover
+   ============================================================ */
+(function markets() {
+  document.querySelectorAll('.market').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      gsap.fromTo(el.querySelector('.market-num'),
+        { y: 8, opacity: 0.6 },
+        { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out' });
+    });
+  });
+})();
+
+/* ============================================================
+   CLOSE hed — split reveal
+   ============================================================ */
+(function closeHed() {
+  const el = document.querySelector('.close-hed');
+  if (!el) return;
+  const spans = el.querySelectorAll('span');
+  gsap.fromTo(spans,
+    { y: 120, opacity: 0 },
+    {
+      y: 0, opacity: 1, duration: 1.1, ease: 'power4.out', stagger: 0.1,
+      scrollTrigger: { trigger: el, start: 'top 90%', toggleActions: 'play none none none' },
+    }
+  );
+})();
+
+/* ============================================================
+   Section heading line reveals (generic — catch the big heds)
+   ============================================================ */
+(function bigHedReveals() {
+  const selectors = [
+    '.opp-hed-big', '.sprint-hed', '.facility-hed',
+    '.sectors-hed', '.economics-hed', '.moat-hed', '.returns-hed', '.problem-hed'
+  ];
+  selectors.forEach(sel => {
+    document.querySelectorAll(sel).forEach(el => {
+      gsap.set(el, { y: 60, opacity: 0 });
+      ScrollTrigger.create({
+        trigger: el,
+        start: 'top bottom-=40',
+        once: true,
+        onEnter: () => {
+          gsap.to(el, { y: 0, opacity: 1, duration: 1.1, ease: 'power4.out' });
+        },
+      });
+    });
+  });
+  // Safety: after everything else mounts (tower + sprint pins) refresh triggers.
+  window.addEventListener('load', () => {
+    setTimeout(() => ScrollTrigger.refresh(), 100);
+  });
+})();
+
+/* ============================================================
+   Financials — bars draw on enter
+   ============================================================ */
+(function finBars() {
+  const els = document.querySelectorAll('.fin-year-bar');
+  els.forEach(el => {
+    const target = el.style.getPropertyValue('--w');
+    el.style.setProperty('--w', '0%');
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 90%',
+      onEnter: () => {
+        gsap.to(el, {
+          duration: 1.4,
+          ease: 'power3.out',
+          onUpdate: function () {
+            el.style.setProperty('--w', (this.progress() * parseFloat(target)) + '%');
+          }
+        });
+      },
+      once: true,
+    });
+  });
+})();
+
+</script>
+</body>
+</html>
